@@ -1,0 +1,9 @@
+numpy
+
+# Microbit
+uflash
+microfs
+
+# Visualization
+pyglet
+vispy
