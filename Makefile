@@ -71,6 +71,9 @@ orientation-flash_radio_receiver: ## Flash the microbit with the radio receiver.
 orientation-run_visualization: ## Run visualization example.
 	@cd smh_microbit/orientation/pc;$(PATH_VENV)'/bin/python3.5' visualization.py;cd $(PATH_PROJECT)
 
+orientation-run_webvisualization: ## Run visualization example on browser.
+		@cd smh_microbit/orientation/pc;$(PATH_VENV)'/bin/python3.5' webserver.py;cd $(PATH_PROJECT)
+
 
 
 

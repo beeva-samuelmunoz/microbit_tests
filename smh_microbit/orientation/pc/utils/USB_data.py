@@ -12,7 +12,7 @@ from . import data
 
 class USBData(Thread):
 
-    def __init__(self, n=30, *args, **kwargs):
+    def __init__(self, n=20, *args, **kwargs):
         """Intialize device
         """
         self._con = serial.Serial(*args, **kwargs)
@@ -44,7 +44,14 @@ class USBData(Thread):
         """
         retval = None
         if self.w_data != []:
-            retval = data.Data(*np.array(self.w_data).mean(axis=0))
+            window_data = np.array(self.w_data)
+            means = window_data.mean(axis=0)
+            # Correct heading, intermediate values range [360,0]
+            headings = window_data[:,6]
+            headings_rot = (headings+90)%360
+            if headings.std()>headings_rot.std():
+                means[6] = (headings_rot-90).mean()
+            retval = data.Data(*means)
         return retval
 
 

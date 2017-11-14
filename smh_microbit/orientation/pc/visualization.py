@@ -11,21 +11,22 @@ from vispy import app, gloo
 from vispy.visuals import CubeVisual, transforms
 from vispy.color import Color
 
-from utils.transformations import data2roll_pitch_yaw
+from utils.orientation import Orientation
 from utils.USB_data import USBData
 
 
 
 class Canvas(app.Canvas):
-    def __init__(self, connection):
+    def __init__(self, connection, orientation):
         self.con = connection
+        self.orientation = orientation
         app.Canvas.__init__(self, 'Cube', keys='interactive', size=(400, 400))
         self.cube = CubeVisual((7.0, 4.0, 0.3), color=Color(color='grey', alpha=0.1, clip=False), edge_color="black")
 
         # Create a TransformSystem that will tell the visual how to draw
         self.cube_transform = transforms.MatrixTransform()
         self.cube.transform = self.cube_transform
-        self._timer = app.Timer(0.05, connect=self.on_timer, start=True)
+        self._timer = app.Timer('0.05', connect=self.on_timer, start=True)
         self.show()
 
     def on_close(self, event):
@@ -45,7 +46,7 @@ class Canvas(app.Canvas):
     def on_timer(self, event):
         data = connection.get_data()
         if data:
-            roll, pitch, yaw = data2roll_pitch_yaw(data)
+            roll, pitch, yaw = orientation.data2roll_pitch_yaw(data)
             # print("{}\t{}\t{}".format( *map(round,(roll,pitch,yaw))))
             self.cube_transform.reset()
             self.cube_transform.rotate(pitch, (1, 0, 0))  # Pitch
@@ -57,9 +58,13 @@ class Canvas(app.Canvas):
 
 
 if __name__ == '__main__':
-    connection = USBData(port="/dev/ttyACM1", baudrate=115200)
+    connection = USBData(port="/dev/ttyACM0", baudrate=115200)
     connection.start()
-    win = Canvas(connection)
+    print("Calibration\nSet your device on the origin and press ENTER.\n")
+    input("Waiting...")
+    c_roll, c_pitch, c_yaw = Orientation._data2roll_pitch_yaw(connection.get_data())
+    orientation = Orientation(c_roll, c_pitch, c_yaw)
+    win = Canvas(connection, orientation)
     win.show()
     if sys.flags.interactive != 1:
         win.app.run()
