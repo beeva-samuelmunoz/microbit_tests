@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>WebGL/Three.js Step Tutorial</title>
+    <title>DEMO: Microbit Orientation</title>
+    <meta charset="utf-8" />
     <style>
      body {
       margin: 0px;
+      font-family: Monospace;
       background-color: #fff;
       overflow: hidden;
      }
+
+			#info {
+				position: absolute;
+				bottom: 10px;
+        left: 10px;
+				width: 100%;
+				text-align: left;
+				z-index: 100;
+				display:block;
+			}
    </style>
   </head>
   <body>
+    <div id="info">
+    </div>
    <script src="js/three.min.js"></script>
    <script src="js/cube.js"></script>
   </body>

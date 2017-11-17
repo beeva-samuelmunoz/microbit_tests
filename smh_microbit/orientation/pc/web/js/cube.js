@@ -4,6 +4,7 @@ var camera;
 var scene;
 var renderer;
 var cube;
+var info = document.getElementById("info");   // Info text.
 
 
 function init() {
@@ -32,7 +33,7 @@ function init() {
 			shininess: 20
 		} );
 		cube = new THREE.Mesh( geometry,
-			[material1,material1,material_display,material_sensors,material1,material1,]
+			[material1,material1,material_sensors,material_display,material1,material1,]
 		);
     cube.position.z = -250;
 		scene.add( cube );
@@ -73,8 +74,9 @@ var ws = new WebSocket("ws://127.0.0.1:5678/");
 ws.onmessage = function (event) {
 	orientation = JSON.parse(event.data);
 	// console.log(orientation);
-	cube.rotation.z = orientation[0]/180*3.141592;  // Roll
+	cube.rotation.z = -orientation[0]/180*3.141592; // Roll
 	cube.rotation.x = orientation[1]/180*3.141592;  // Pitch
-	cube.rotation.y = -orientation[2]/180*3.141592;  // Yaw
+	cube.rotation.y = -orientation[2]/180*3.141592; // Yaw
+  info.innerHTML = "Roll:  "+Math.round(orientation[0])+"<br/>Pitch: "+Math.round(orientation[1])+"<br/>Yaw: "+Math.round(orientation[2])
   render();
 };

@@ -18,14 +18,14 @@ class Orientation:
         """Apply the inital calibration.
         """
         roll, pitch, yaw = self._data2roll_pitch_yaw(data)
-        new_roll = (-roll+self.c_roll)%360
-        if 90<new_roll<270 and 90<yaw<270:
-            pitch = -pitch
-        return (
-            new_roll,
-            (pitch-self.c_pitch)%360,
-            (yaw-self.c_yaw)%360
-        )
+        new_roll = (roll-self.c_roll)%360
+        new_yaw = (yaw-self.c_yaw)%360
+        if 90<new_yaw<270:
+            new_pitch = (self.c_pitch-pitch)%360
+        else:
+            new_pitch = (pitch-self.c_pitch)%360
+        return (new_roll, new_pitch, new_yaw)
+
 
     @staticmethod
     def _data2roll_pitch_yaw(data):

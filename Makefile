@@ -61,33 +61,24 @@ orientation-flash_usb_logger: ## Flash the microbit with the USB logger.
 	@echo "Flashing libs"
 	@$(PATH_VENV)/bin/ufs put smh_microbit/orientation/microbit/data.py
 
-
 orientation-flash_radio_logger: ## Flash the microbit with the radio logger.
-
+	@echo "Flashing RADIO microbit logger"
+	@$(PATH_VENV)/bin/uflash smh_microbit/orientation/microbit/radio_logger.py
+	@echo "Restarting the board ..."
+	@sleep 20
+	@echo "Flashing libs"
+	@$(PATH_VENV)/bin/ufs put smh_microbit/orientation/microbit/data.py
 
 orientation-flash_radio_receiver: ## Flash the microbit with the radio receiver.
-
+	@echo "Flashing RADIO microbit receiver"
+	@$(PATH_VENV)/bin/uflash smh_microbit/orientation/microbit/radio_receiver.py
+	@echo "Restarting the board ..."
+	@sleep 20
+	@echo "Flashing libs"
+	@$(PATH_VENV)/bin/ufs put smh_microbit/orientation/microbit/data.py
 
 orientation-run_visualization: ## Run visualization example.
 	@cd smh_microbit/orientation/pc;$(PATH_VENV)'/bin/python3.5' visualization.py;cd $(PATH_PROJECT)
 
 orientation-run_webvisualization: ## Run visualization example on browser.
 		@cd smh_microbit/orientation/pc;$(PATH_VENV)'/bin/python3.5' webserver.py;cd $(PATH_PROJECT)
-
-
-
-
-run_game: ## Start the game
-	@$(PATH_VENV)'/bin/python3.5' -m smh_eyetracking.game.game
-
-build_features: ## Build the features02 dataset
-	@$(PATH_VENV)'/bin/python3.5' -m smh_eyetracking.features02.build
-
-build_features-augmented: ## Build the features02 dataset
-	@$(PATH_VENV)'/bin/python3.5' -m smh_eyetracking.features02.build_augmented
-
-inspect_dataset: ## Inspect the dataset
-	@$(PATH_VENV)'/bin/python3.5' -m smh_eyetracking.inspect_dataset.inspect_dataset
-
-start_notebooks: ## Start the Jupyter notebook server
-	@$(PATH_VENV)/bin/jupyter notebook --NotebookApp.default_url=/tree/smh_eyetracking/notebooks --ip=0.0.0.0

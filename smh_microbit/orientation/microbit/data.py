@@ -6,6 +6,7 @@ import sys
 from collections import namedtuple
 
 
+
 FIELDS = [
     'Acc_X',
     'Acc_Y',
@@ -16,6 +17,9 @@ FIELDS = [
     'Mag_Z',
     'Mag_heading'
 ]
+
+#4 digits per measure and separating commas
+DATA_LENGTH = 4*len(FIELDS) + len(FIELDS)-1 + 10
 
 Data = namedtuple('Data', FIELDS)
 
