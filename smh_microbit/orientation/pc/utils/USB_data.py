@@ -3,6 +3,7 @@
 """
 
 import serial
+from time import sleep
 from threading import Thread
 
 import numpy as np
@@ -19,6 +20,7 @@ class USBData(Thread):
         self.running = True  # Stop condition
         self.w_n = n # length of the window
         self.w_data = []  # n last read elements. Running window
+        self.period_s = data.PERIOD_MS/1000.0  # Time between consecutive reads
         super().__init__()
 
 
@@ -34,6 +36,7 @@ class USBData(Thread):
             try:
                 self.w_data.append(data.msg2data(self._con.readline().decode()))
                 self.w_data.pop(0)
+                sleep(self.period_s)
             except:
                 pass
         self._con.close()

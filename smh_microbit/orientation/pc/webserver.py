@@ -22,7 +22,7 @@ async def ws_func(websocket, path):
 
 if __name__ == '__main__':
     # Serial connection
-    connection = USBData(port="/dev/ttyACM0", baudrate=115200)
+    connection = USBData(n=10, port="/dev/ttyACM0", baudrate=115200)
     connection.start()
     print("==>  CALIBRATION  <==")
     print("Put yout device:")
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     orientation = Orientation(c_roll, c_pitch, c_yaw)
     # orientation = Orientation(0,0,0)
     print("\n\n==>  WEB SERVER  <==")
-    print("\t- Open the file web/demo_mb.html")
+    print("\t- Open the file smh_microbit/orientation/pc/web/demo_mb.html")
     print("\t- Firefox: OK")
     print("\t- Chromium: chromium-browser --allow-file-access-from-files")
     # Websocket server

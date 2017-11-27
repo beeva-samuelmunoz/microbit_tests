@@ -21,16 +21,16 @@ FIELDS = [
 #4 digits per measure and separating commas
 DATA_LENGTH = 4*len(FIELDS) + len(FIELDS)-1 + 10
 
+PERIOD_MS = 10  # milliseconds to wait between measures
+
 Data = namedtuple('Data', FIELDS)
 
-
-#
-### TODO: Compression b64 int encoding
-#
 
 
 #
 ### Serialization
+#
+# TODO: fixed length block of measures could be more efficient
 #
 
 def data2msg(data):
