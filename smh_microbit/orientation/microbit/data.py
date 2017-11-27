@@ -21,7 +21,7 @@ FIELDS = [
 #4 digits per measure and separating commas
 DATA_LENGTH = 4*len(FIELDS) + len(FIELDS)-1 + 10
 
-PERIOD_MS = 10  # milliseconds to wait between measures
+PERIOD_MS = 20  # milliseconds to wait between measures
 
 Data = namedtuple('Data', FIELDS)
 

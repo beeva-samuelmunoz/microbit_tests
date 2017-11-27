@@ -21,6 +21,7 @@ class USBData(Thread):
         self.w_n = n # length of the window
         self.w_data = []  # n last read elements. Running window
         self.period_s = data.PERIOD_MS/1000.0  # Time between consecutive reads
+        self.i_Mag_heading = data.FIELDS.index('Mag_heading')  # Index of the Mag_heading field
         super().__init__()
 
 
@@ -49,17 +50,17 @@ class USBData(Thread):
         if self.w_data != []:
             window_data = np.array(self.w_data)
             means = window_data.mean(axis=0)
-            # Correct heading, intermediate values range [360,0]
-            headings = window_data[:,6]
+            # Correct Mag_heading, intermediate values range [360,0]
+            headings = window_data[:,self.i_Mag_heading]
             headings_rot = (headings+90)%360
             if headings.std()>headings_rot.std():
-                means[6] = (headings_rot-90).mean()
+                means[self.i_Mag_heading] = (headings_rot-90).mean()
             retval = data.Data(*means)
         return retval
 
 
     def close(self):
-        """Stop webcam and thread
+        """Stop thread safely
         """
         self.running = False
         self.join()
