@@ -82,3 +82,16 @@ orientation-run_visualization: ## Run visualization example.
 
 orientation-run_webvisualization: ## Run visualization example on browser.
 		@cd smh_microbit/orientation/pc;$(PATH_VENV)'/bin/python3.5' webserver.py;cd $(PATH_PROJECT)
+
+
+#
+### Magic Dice
+#
+
+magic_dice-flash_dice: ## Flash the dice hardware.
+	@echo "Flashing the DICE board"
+	@$(PATH_VENV)/bin/uflash smh_microbit/magic_dice/microbit/dice.py
+
+magic_dice-flash_magician: ## Flash the magician hardware.
+	@echo "Flashing the MAGICIAN board"
+	@$(PATH_VENV)/bin/uflash smh_microbit/magic_dice/microbit/magician.py
